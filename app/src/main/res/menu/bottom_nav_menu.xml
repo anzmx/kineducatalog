@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_family"
+        android:icon="@drawable/ic_home_family_24dp"
+        android:title="@string/menu_family"
+        android:enabled="false"
+        android:checkable="false"/>
+
+    <item
+        android:id="@+id/navigation_plan"
+        android:icon="@drawable/ic_home_plan_24dp"
+        android:title="@string/menu_plan"
+        android:enabled="false"/>
+
+    <item
+        android:id="@+id/navigation_catalog"
+        android:icon="@drawable/ic_home_catalog_24dp"
+        android:title="@string/menu_catalog"
+        android:checked="true"/>
+
+    <item
+        android:id="@+id/navigation_progress"
+        android:icon="@drawable/ic_home_progress_24dp"
+        android:title="@string/menu_progress"
+        android:enabled="false"/>
+
+    <item
+        android:id="@+id/navigation_milestones"
+        android:icon="@drawable/ic_home_milestones_24dp"
+        android:title="@string/menu_milestones"
+        android:enabled="false"/>
+
+</menu>

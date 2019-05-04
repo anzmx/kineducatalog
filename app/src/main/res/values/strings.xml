@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">KineduCatalog</string>
+    <string name="menu_family">My Family</string>
+    <string name="menu_plan">My Plan</string>
+    <string name="menu_catalog">Catalog</string>
+    <string name="menu_progress">Progress</string>
+    <string name="menu_milestones">Milestones</string>
+
+</resources>
