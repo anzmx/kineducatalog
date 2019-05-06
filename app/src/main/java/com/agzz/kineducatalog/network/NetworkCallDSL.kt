@@ -1,4 +1,4 @@
-package com.agzz.kineducatalog.Network
+package com.agzz.kineducatalog.network
 
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.*

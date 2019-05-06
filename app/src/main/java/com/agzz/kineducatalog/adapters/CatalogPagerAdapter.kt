@@ -1,0 +1,34 @@
+package com.agzz.kineducatalog.adapters
+
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import com.agzz.kineducatalog.fragments.ActivitiesIndexFragment
+import com.agzz.kineducatalog.fragments.ArticlesIndexFragment
+
+class CatalogPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
+    override fun getItem(position: Int): Fragment {
+        return when (position) {
+            0 -> {
+                ActivitiesIndexFragment()
+            }
+            else -> {
+                return ArticlesIndexFragment()
+            }
+        }
+    }
+
+    override fun getCount(): Int {
+        return 2
+    }
+
+    override fun getPageTitle(position: Int): CharSequence {
+        return when (position) {
+            0 -> "Activities"
+            else -> {
+                return "Articles"
+            }
+        }
+    }
+}

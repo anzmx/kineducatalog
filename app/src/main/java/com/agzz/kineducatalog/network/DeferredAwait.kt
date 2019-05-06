@@ -1,4 +1,4 @@
-package com.agzz.kineducatalog.Network
+package com.agzz.kineducatalog.network
 
 import kotlinx.coroutines.*
 import retrofit2.HttpException

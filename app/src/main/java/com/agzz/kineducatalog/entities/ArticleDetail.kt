@@ -1,4 +1,4 @@
-package com.agzz.kineducatalog.Entities
+package com.agzz.kineducatalog.entities
 
 data class ArticleDetail(
     val data: ArticleDetailData

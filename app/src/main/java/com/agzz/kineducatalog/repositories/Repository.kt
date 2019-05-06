@@ -1,8 +1,8 @@
-package com.agzz.kineducatalog.Repositories
+package com.agzz.kineducatalog.repositories
 
-import com.agzz.kineducatalog.Entities.*
-import com.agzz.kineducatalog.Network.DataResponse
-import com.agzz.kineducatalog.Network.networkCall
+import com.agzz.kineducatalog.entities.*
+import com.agzz.kineducatalog.network.DataResponse
+import com.agzz.kineducatalog.network.networkCall
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -11,7 +11,6 @@ import retrofit2.http.GET
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
-import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -76,12 +75,12 @@ object KineduAPI {
         fun getActivities(@Query("skill_id") skillId: String, @Query("baby_id") babyId: String): Deferred<Response<ActivitiesReposResponse>>
     }
     interface KineduArticlesService {
-        @GET("/catalogue/articles")
-        fun getArticles(@Query("skill_id") skillId: String, @Query("vavy_id") babyId: String): Deferred<Response<ArticleReposResponse>>
+        @GET("catalogue/articles")
+        fun getArticles(@Query("skill_id") skillId: String, @Query("baby_id") babyId: String): Deferred<Response<ArticleReposResponse>>
     }
 
     interface KineduArticleDetailService {
-        @GET("/catalogue/articles/{article_id}")
+        @GET("catalogue/articles/{article_id}")
         fun getArticleDetail(@Path("article_id", encoded = true) articleId: String): Deferred<Response<ArticleDetailReposResponse>>
     }
 }

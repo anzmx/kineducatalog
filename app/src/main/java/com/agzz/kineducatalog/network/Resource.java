@@ -1,4 +1,4 @@
-package com.agzz.kineducatalog.Network;
+package com.agzz.kineducatalog.network;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Objects;
 
 /**
  * A generic class that holds a value with its loading status.
@@ -13,9 +14,9 @@ import java.lang.annotation.RetentionPolicy;
  */
 public class Resource<T>
 {
-    public static final int SUCCESS = 90;
-    public static final int LOADING = 91;
-    public static final int ERROR = 92;
+    public static final int SUCCESS = 0;
+    public static final int LOADING = 1;
+    public static final int ERROR = 2;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({SUCCESS,LOADING,ERROR})
@@ -101,10 +102,10 @@ public class Resource<T>
         if (status != resource.status) {
             return false;
         }
-        if (message != null ? !message.equals(resource.message) : resource.message != null) {
+        if (!Objects.equals(message, resource.message)) {
             return false;
         }
-        return data != null ? data.equals(resource.data) : resource.data == null;
+        return Objects.equals(data, resource.data);
     }
 
     @Override

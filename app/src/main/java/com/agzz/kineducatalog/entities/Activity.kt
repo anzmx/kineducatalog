@@ -1,4 +1,4 @@
-package com.agzz.kineducatalog.Entities
+package com.agzz.kineducatalog.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
