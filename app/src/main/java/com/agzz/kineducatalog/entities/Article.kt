@@ -14,8 +14,10 @@ data class ArticleMeta(
     val total: Int,
     val total_pages: Int
 )
-
+@Entity
 data class ArticleData(
+        @PrimaryKey(autoGenerate = true)
+        val id:Int,
     val articles: List<Article>
 )
 @Entity

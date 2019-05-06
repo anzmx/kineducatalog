@@ -1,5 +1,6 @@
 package com.agzz.kineducatalog.entities
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -7,9 +8,10 @@ data class ActivityIndex(
     val data: ActivityData,
     val meta: ActivityMeta
 )
-
+@Entity
 data class ActivityData(
-    val activities: List<Activity>,
+        val activities: List<Activity>,
+        @PrimaryKey
     val id: Int,
     val name: String,
     val type: String

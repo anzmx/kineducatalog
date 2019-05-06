@@ -1,6 +1,8 @@
 package com.agzz.kineducatalog.network
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.agzz.kineducatalog.entities.ActivityData
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import retrofit2.Response

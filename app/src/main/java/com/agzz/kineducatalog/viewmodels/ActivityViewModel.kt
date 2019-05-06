@@ -1,16 +1,14 @@
 package com.agzz.kineducatalog.viewmodels
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
 import com.agzz.kineducatalog.entities.ActivityData
-import com.agzz.kineducatalog.network.Resource
 import com.agzz.kineducatalog.repositories.Repository
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class ActivityViewModel : ViewModel(){
+class ActivityViewModel(var app:Application) : AndroidViewModel(app){
+
 
     private val parentJob = Job()
 
@@ -19,14 +17,16 @@ class ActivityViewModel : ViewModel(){
 
     private val scope = CoroutineScope(coroutineContext)
 
-    private val repository : Repository = Repository
+    private val repository : Repository = Repository(app)
 
 
-    val activitiesLiveData = MutableLiveData<Resource<ActivityData>>()
+    val activitiesLiveData = MutableLiveData<ActivityData>()
 
     fun fetchActivities(skillId:String, babyId: String, lifecycleOwner: LifecycleOwner){
         scope.launch(Dispatchers.Main) {
-            repository.getActivities(skillId,babyId).observe(lifecycleOwner, Observer {  activitiesLiveData.postValue(it)})
+            repository.getActivities(skillId,babyId, lifecycleOwner).observe(lifecycleOwner, Observer {
+                it?.let {  activitiesLiveData.postValue(it as ActivityData) }
+                })
         }
     }
 

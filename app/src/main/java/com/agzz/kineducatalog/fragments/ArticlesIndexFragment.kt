@@ -46,23 +46,9 @@ class ArticlesIndexFragment : Fragment(){
         articlesAdapter = ArticlesAdapter(Glide.with(this))
         articlesRecyclerView.adapter = articlesAdapter
         articlesViewModel.articlesLiveData.observe(viewLifecycleOwner, Observer {
-            when(it.status){
-                Resource.LOADING -> {
-                    Log.d("MainActivity", "--> Loading articles")
-                    progressBar.visibility = View.VISIBLE
-                }
-                Resource.SUCCESS -> {
-                    Log.d("MainActivity", "--> Success! | loaded ${it.data!!.articles.size} articles.")
-                    articlesAdapter.setData(it.data!!.articles)
-                    progressBar.visibility = View.GONE
+            articlesAdapter.setData(it.articles)
+            progressBar.visibility = View.GONE
 
-                }
-                Resource.ERROR -> {
-                    Log.d("MainActivity", "--> Error loading articles!")
-                    Toast.makeText(activity,"Error loading articles", Toast.LENGTH_LONG).show()
-                    progressBar.visibility = View.GONE
-                }
-            }
         })
         articlesViewModel.fetchArticles("5","2064732",viewLifecycleOwner)
         val decoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)

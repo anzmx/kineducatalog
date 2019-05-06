@@ -1,16 +1,14 @@
 package com.agzz.kineducatalog.viewmodels
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
 import com.agzz.kineducatalog.entities.ArticleDetailData
 import com.agzz.kineducatalog.network.Resource
 import com.agzz.kineducatalog.repositories.Repository
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class ArticleDetailViewModel : ViewModel(){
+class ArticleDetailViewModel(var app:Application) : AndroidViewModel(app){
 
     private val parentJob = Job()
 
@@ -19,7 +17,7 @@ class ArticleDetailViewModel : ViewModel(){
 
     private val scope = CoroutineScope(coroutineContext)
 
-    private val repository : Repository = Repository
+    private val repository : Repository = Repository(app)
 
 
     val articleDetailLiveData = MutableLiveData<Resource<ArticleDetailData>>()

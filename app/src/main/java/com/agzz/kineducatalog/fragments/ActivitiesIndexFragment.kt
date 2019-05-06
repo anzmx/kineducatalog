@@ -44,23 +44,9 @@ class ActivitiesIndexFragment : Fragment(){
         activitiesAdapter = ActivitiesAdapter(Glide.with(this))
         activitiesRecyclerView.adapter = activitiesAdapter
         activitiesViewModel.activitiesLiveData.observe(viewLifecycleOwner, Observer {
-            when(it.status){
-                Resource.LOADING -> {
-                    Log.d("MainActivity", "--> Loading activities")
-                    progressBar.visibility = View.VISIBLE
-                }
-                Resource.SUCCESS -> {
-                    Log.d("MainActivity", "--> Success! | loaded ${it.data!!.activities.size} activities.")
-                    activitiesAdapter.setData(it.data!!.activities)
+                    activitiesAdapter.setData(it.activities)
                     progressBar.visibility = View.GONE
 
-                }
-                Resource.ERROR -> {
-                    Log.d("MainActivity", "--> Error loading activities!")
-                    Toast.makeText(activity,"Error loading activities", Toast.LENGTH_LONG).show()
-                    progressBar.visibility = View.GONE
-                }
-            }
         })
         activitiesViewModel.fetchActivities("5","2064732",viewLifecycleOwner)
         val decoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
