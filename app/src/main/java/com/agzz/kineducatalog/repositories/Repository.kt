@@ -1,8 +1,10 @@
 package com.agzz.kineducatalog.repositories
 
+import com.agzz.kineducatalog.daos.ActivitiesDao
 import com.agzz.kineducatalog.entities.*
 import com.agzz.kineducatalog.network.DataResponse
 import com.agzz.kineducatalog.network.networkCall
+import com.agzz.kineducatalog.room.KineduDatabase
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred
 import okhttp3.Interceptor
@@ -16,17 +18,16 @@ import retrofit2.http.Query
 
 
 object Repository {
-
-
-    fun getActivities(skillID: String, babyId: String) = networkCall<ActivitiesReposResponse, ActivityData> {
-        client = KineduAPI.kineduActivitiesService.getActivities(skillID,babyId)
+    fun getActivities(skillID: String, babyId: String) =
+            networkCall<ActivitiesReposResponse, ActivityData> {
+        client = KineduAPI.kineduAPIService.getActivities(skillID,babyId)
     }
     fun getArticles(skillID: String, babyId: String) = networkCall<ArticleReposResponse, ArticleData> {
-        client = KineduAPI.kineduArticlesService.getArticles(skillID,babyId)
+        client = KineduAPI.kineduAPIService.getArticles(skillID,babyId)
     }
 
     fun getArticleDetail(articleId: String) = networkCall<ArticleDetailReposResponse, ArticleDetailData> {
-        client = KineduAPI.kineduArticleDetailService.getArticleDetail(articleId)
+        client = KineduAPI.kineduAPIService.getArticleDetail(articleId)
     }
 }
 
@@ -64,22 +65,17 @@ object KineduAPI {
             .client(httpClient.build())
             .build()
 
-    var kineduActivitiesService = retrofit.create<KineduActivitiesService>(KineduActivitiesService::class.java)
-    var kineduArticlesService = retrofit.create<KineduArticlesService>(KineduArticlesService::class.java)
-    var kineduArticleDetailService = retrofit.create<KineduArticleDetailService>(KineduArticleDetailService::class.java)
+    var kineduAPIService = retrofit.create<KineduAPIService>(KineduAPIService::class.java)
 
 
 
-    interface KineduActivitiesService {
+    interface KineduAPIService {
         @GET("catalogue/activities")
         fun getActivities(@Query("skill_id") skillId: String, @Query("baby_id") babyId: String): Deferred<Response<ActivitiesReposResponse>>
-    }
-    interface KineduArticlesService {
+
         @GET("catalogue/articles")
         fun getArticles(@Query("skill_id") skillId: String, @Query("baby_id") babyId: String): Deferred<Response<ArticleReposResponse>>
-    }
 
-    interface KineduArticleDetailService {
         @GET("articles/{article_id}")
         fun getArticleDetail(@Path("article_id", encoded = false) articleId: String): Deferred<Response<ArticleDetailReposResponse>>
     }

@@ -14,4 +14,7 @@ interface ActivitiesDao {
 
     @Insert(onConflict = REPLACE)
     fun insert(activity: Activity)
+
+    @Insert(onConflict = REPLACE)
+     fun insertAll(activities: List<Activity>)
 }

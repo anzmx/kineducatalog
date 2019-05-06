@@ -26,7 +26,7 @@ class ActivityViewModel : ViewModel(){
 
     fun fetchActivities(skillId:String, babyId: String, lifecycleOwner: LifecycleOwner){
         scope.launch(Dispatchers.Main) {
-            repository.getActivities(skillId,babyId).observe(lifecycleOwner, Observer {  activitiesLiveData.postValue(it) })
+            repository.getActivities(skillId,babyId).observe(lifecycleOwner, Observer {  activitiesLiveData.postValue(it)})
         }
     }
 
