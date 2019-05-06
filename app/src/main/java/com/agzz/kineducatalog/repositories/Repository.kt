@@ -80,7 +80,7 @@ object KineduAPI {
     }
 
     interface KineduArticleDetailService {
-        @GET("catalogue/articles/{article_id}")
-        fun getArticleDetail(@Path("article_id", encoded = true) articleId: String): Deferred<Response<ArticleDetailReposResponse>>
+        @GET("articles/{article_id}")
+        fun getArticleDetail(@Path("article_id", encoded = false) articleId: String): Deferred<Response<ArticleDetailReposResponse>>
     }
 }

@@ -1,5 +1,6 @@
 package com.agzz.kineducatalog.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,9 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.agzz.kineducatalog.R
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.agzz.kineducatalog.activities.ArticleDetailActivity
 import com.agzz.kineducatalog.adapters.ArticlesAdapter
 import com.agzz.kineducatalog.network.Resource
 import com.agzz.kineducatalog.viewmodels.ArticlesIndexViewModel
+import com.bumptech.glide.Glide
 
 
 class ArticlesIndexFragment : Fragment(){
@@ -40,9 +43,9 @@ class ArticlesIndexFragment : Fragment(){
         articlesViewModel = ViewModelProviders.of(this).get(ArticlesIndexViewModel::class.java)
         articlesRecyclerView = rootView.findViewById(R.id.articles_recyclerview) as RecyclerView
         articlesRecyclerView.layoutManager = LinearLayoutManager(activity)
-        articlesAdapter = ArticlesAdapter(this)
+        articlesAdapter = ArticlesAdapter(Glide.with(this))
         articlesRecyclerView.adapter = articlesAdapter
-       articlesViewModel.articlesLiveData.observe(viewLifecycleOwner, Observer {
+        articlesViewModel.articlesLiveData.observe(viewLifecycleOwner, Observer {
             when(it.status){
                 Resource.LOADING -> {
                     Log.d("MainActivity", "--> Loading articles")
@@ -64,6 +67,12 @@ class ArticlesIndexFragment : Fragment(){
         articlesViewModel.fetchArticles("5","2064732",viewLifecycleOwner)
         val decoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         articlesRecyclerView.addItemDecoration(decoration)
+
+        articlesAdapter.onItemClick = { article ->
+            val intent = Intent(this.activity, ArticleDetailActivity::class.java)
+            intent.putExtra("ArticleId", article.id)
+            startActivity(intent)
+        }
 
         return rootView
     }

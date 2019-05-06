@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+        <RelativeLayout
+            android:background="@color/colorPrimaryDark"
+            android:id="@+id/topPanel"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <ImageButton
+                android:id="@+id/article_detail_back"
+                android:paddingStart="16dp"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_24dp"
+                android:tint="@color/colorWhite"
+                android:background="@null"/>
+        </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+    <RelativeLayout
+        android:id="@+id/titleBar"
+        android:layout_below="@id/article_detail_picture"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorAccent">
+
+        <TextView
+            android:id="@+id/article_detail_title"
+            android:padding="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/shareButton"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp"
+            android:layout_centerVertical="true"
+            android:textAlignment="center" />
+
+        <ImageButton
+            android:id="@+id/shareButton"
+            android:paddingEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:tint="@color/colorWhite"
+            android:src="@drawable/ic_baseline_share_24dp"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+
+    </RelativeLayout>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_below="@id/topPanel"
+        android:id="@+id/article_detail_picture"
+        android:layout_alignParentStart="true"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"/>
+    <TextView
+        android:id="@+id/article_detail_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:padding="24dp"
+        android:layout_below="@id/titleBar"
+        android:autoLink="web"/>
+    </RelativeLayout>
+    </ScrollView>

@@ -40,7 +40,9 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            app:tabTextColor="@color/colorWhite"
+            app:tabIndicatorColor="@color/colorWhite"
+            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabTextColor="@color/colorLightGray"
             app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"

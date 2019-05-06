@@ -3,16 +3,13 @@ package com.agzz.kineducatalog.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
 data class ActivityIndex(
     val data: ActivityData,
     val meta: ActivityMeta
 )
 
-@Entity
 data class ActivityData(
     val activities: List<Activity>,
-    @PrimaryKey
     val id: Int,
     val name: String,
     val type: String
@@ -35,7 +32,6 @@ data class Activity(
     val thumbnail: String
 )
 
-@Entity
 data class ActivityMeta(
     val page: Int,
     val per_page: Int,

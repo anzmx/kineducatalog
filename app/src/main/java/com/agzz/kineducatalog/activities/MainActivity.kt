@@ -1,5 +1,6 @@
 package com.agzz.kineducatalog.activities
 
+import android.graphics.Color
 import android.os.Bundle
 
 import com.agzz.kineducatalog.R
@@ -8,8 +9,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 
 import android.view.MenuItem
+import androidx.room.Room
 import androidx.viewpager.widget.ViewPager
 import com.agzz.kineducatalog.adapters.CatalogPagerAdapter
+import com.agzz.kineducatalog.room.KineduDatabase
 import com.google.android.material.tabs.TabLayout
 
 
@@ -47,6 +50,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //Setup Room Db
+
+        var kineduDatabase: KineduDatabase? = KineduDatabase.getInstance(applicationContext)
+
+
+
         val navView = findViewById<BottomNavigationView>(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navView.selectedItemId = R.id.navigation_catalog

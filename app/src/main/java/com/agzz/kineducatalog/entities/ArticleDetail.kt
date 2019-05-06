@@ -1,5 +1,8 @@
 package com.agzz.kineducatalog.entities
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 data class ArticleDetail(
     val data: ArticleDetailData
 )
@@ -8,11 +11,12 @@ data class ArticleDetailData(
     val article: ArticleX,
     val related_items: RelatedItems
 )
-
+@Entity
 data class ArticleX(
     val area_id: Int,
     val body: String,
     val faved: Boolean,
+    @PrimaryKey
     val id: Int,
     val link: String,
     val picture: String,

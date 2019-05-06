@@ -17,6 +17,7 @@ import com.agzz.kineducatalog.R
 import com.agzz.kineducatalog.viewmodels.ActivityViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.agzz.kineducatalog.network.Resource
+import com.bumptech.glide.Glide
 
 
 class ActivitiesIndexFragment : Fragment(){
@@ -40,7 +41,7 @@ class ActivitiesIndexFragment : Fragment(){
         activitiesViewModel = ViewModelProviders.of(this).get(ActivityViewModel::class.java)
         activitiesRecyclerView = rootView.findViewById(R.id.activities_recyclerview) as RecyclerView
         activitiesRecyclerView.layoutManager = LinearLayoutManager(activity)
-        activitiesAdapter = ActivitiesAdapter(this)
+        activitiesAdapter = ActivitiesAdapter(Glide.with(this))
         activitiesRecyclerView.adapter = activitiesAdapter
         activitiesViewModel.activitiesLiveData.observe(viewLifecycleOwner, Observer {
             when(it.status){
@@ -64,8 +65,8 @@ class ActivitiesIndexFragment : Fragment(){
         activitiesViewModel.fetchActivities("5","2064732",viewLifecycleOwner)
         val decoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         activitiesRecyclerView.addItemDecoration(decoration)
-
         return rootView
+
     }
 
 

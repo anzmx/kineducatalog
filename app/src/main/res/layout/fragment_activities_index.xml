@@ -32,7 +32,7 @@
             android:id="@+id/babySkillHeaderText"
             android:padding="8dp"
             android:paddingEnd="30dp"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
