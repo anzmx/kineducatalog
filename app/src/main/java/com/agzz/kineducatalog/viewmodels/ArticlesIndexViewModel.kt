@@ -25,8 +25,8 @@ class ArticlesIndexViewModel(var app:Application) : AndroidViewModel(app){
 
     fun fetchArticles(skillId:String, babyId: String, lifecycleOwner: LifecycleOwner){
         scope.launch(Dispatchers.Main) {
-            repository.getArticles(skillId,babyId,lifecycleOwner).observe(lifecycleOwner, Observer {
-                it?.let {articlesLiveData.postValue(it as ArticleData)  } })
+            repository.getArticles(skillId,babyId,lifecycleOwner).observe(lifecycleOwner, Observer { it ->
+                it?.let {articlesLiveData.postValue(it)  } })
         }
     }
 

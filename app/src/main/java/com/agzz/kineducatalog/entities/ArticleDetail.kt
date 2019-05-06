@@ -1,23 +1,25 @@
 package com.agzz.kineducatalog.entities
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 data class ArticleDetail(
     val data: ArticleDetailData
 )
-
+@Entity
 data class ArticleDetailData(
     val article: ArticleX,
-    val related_items: RelatedItems
+    val related_items: RelatedItems,
+    @PrimaryKey
+    val id:Int = article.id
 )
-@Entity
+
 data class ArticleX(
     val area_id: Int,
     val body: String,
     val faved: Boolean,
-    @PrimaryKey
-    val id: Int,
+    val id:Int,
     val link: String,
     val picture: String,
     val title: String

@@ -23,6 +23,8 @@
         android:textColor="@color/colorWhite"
         android:layout_centerHorizontal="true"/>
     <Spinner
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        android:backgroundTint="@color/colorWhite"
         android:id="@+id/ageSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -20,11 +20,12 @@ class ArticleDetailViewModel(var app:Application) : AndroidViewModel(app){
     private val repository : Repository = Repository(app)
 
 
-    val articleDetailLiveData = MutableLiveData<Resource<ArticleDetailData>>()
+    val articleDetailLiveData = MutableLiveData<ArticleDetailData>()
 
-    fun fetchArticleDetail(articleId: String, lifecycleOwner: LifecycleOwner){
+    fun fetchArticleDetail(articleId: Int, lifecycleOwner: LifecycleOwner){
         scope.launch(Dispatchers.Main) {
-            repository.getArticleDetail(articleId).observe(lifecycleOwner, Observer {  articleDetailLiveData.postValue(it) })
+            repository.getArticleDetail(articleId,lifecycleOwner).observe(lifecycleOwner, Observer { it ->
+                it?.let { articleDetailLiveData.postValue(it) } })
         }
     }
 

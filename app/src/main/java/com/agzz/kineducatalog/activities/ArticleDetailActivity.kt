@@ -49,35 +49,18 @@ class ArticleDetailActivity: AppCompatActivity() {
         }
         articleDetailViewModel = ViewModelProviders.of(this).get(ArticleDetailViewModel::class.java)
         articleDetailViewModel.articleDetailLiveData.observe(this, Observer {
-            when(it.status){
-                Resource.LOADING -> {
-                    Log.d("ArticleDetailActivity", "--> Loading article Detail")
-                    progressBar.visibility = View.VISIBLE
-                }
-                Resource.SUCCESS -> {
-                    Log.d("ArticleDetailActivity", "--> Success! | loaded article detail.")
-                    Glide.with(this)
-                            .load(it.data!!.article.picture)
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(articleImage)
-                    val htmlbody: Spanned = Html.fromHtml(it!!.data!!.article.body,Html.FROM_HTML_MODE_LEGACY)
-                    textBody.text = htmlbody
-                    textBody.setLinkTextColor(Color.parseColor("#859BB1"))
-                    articleTitle.text = it.data!!.article.title
+            Glide.with(this)
+                    .load(it.article.picture)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(articleImage)
+            val htmlbody: Spanned = Html.fromHtml(it.article.body,Html.FROM_HTML_MODE_LEGACY)
+            textBody.text = htmlbody
+            textBody.setLinkTextColor(Color.parseColor("#859BB1"))
+            articleTitle.text = it.article.title
+            progressBar.visibility = View.GONE
 
-
-
-                    progressBar.visibility = View.GONE
-
-                }
-                Resource.ERROR -> {
-                    Log.d("ArticleDetailActivity", "--> Error loading article detail!")
-                    Toast.makeText(this,"Error loading articles", Toast.LENGTH_LONG).show()
-                    progressBar.visibility = View.GONE
-                }
-            }
         })
-        articleDetailViewModel.fetchArticleDetail(articleId.toString(),this)
+        articleDetailViewModel.fetchArticleDetail(articleId,this)
     }
 }

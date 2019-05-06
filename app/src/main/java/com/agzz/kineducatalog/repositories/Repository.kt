@@ -16,6 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.room.RoomDatabase
 import com.agzz.kineducatalog.daos.ActivitiesDao
+import com.agzz.kineducatalog.daos.ArticleDetailDao
 import com.agzz.kineducatalog.daos.ArticlesDao
 import com.agzz.kineducatalog.entities.*
 import com.agzz.kineducatalog.network.DataResponse
@@ -37,11 +38,12 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-class Repository(application: Application) {
-    var application: Application = application
-    var localDb: KineduDatabase = KineduDatabase.getInstance(application)!!
-    var activitiesDao: ActivitiesDao = localDb.activitiesDao()
-    var articlesDao: ArticlesDao = localDb.articlesDao()
+class Repository(var application: Application) {
+    private var localDb: KineduDatabase = KineduDatabase.getInstance(application)!!
+    private var activitiesDao: ActivitiesDao = localDb.activitiesDao()
+    private var articlesDao: ArticlesDao = localDb.articlesDao()
+    private var articleDetailDao: ArticleDetailDao = localDb.articleDetailDao()
+
 
 
 
@@ -65,9 +67,18 @@ class Repository(application: Application) {
         return getArticlesDataFromDb()
     }
 
+    fun getArticleDetail(articleId:Int, lifecycleOwner: LifecycleOwner):LiveData<ArticleDetailData>{
+        if (verifyAvailableNetwork()) {
+            updateDbArticleDetail(articleId, lifecycleOwner)
+        }
+        return getArticleDetailDataFromDb(articleId)
+    }
+
     fun getActivitiesDataFromDb() = activitiesDao.getActivityData()
 
     fun getArticlesDataFromDb() = articlesDao.getArticlesData()
+
+    fun getArticleDetailDataFromDb(id:Int) = articleDetailDao.getArticleDetailData(id)
 
     fun getActivitiesFromApi(skillID: String, babyId: String): MutableLiveData<Resource<ActivityData>> =
             networkCall<ActivitiesReposResponse, ActivityData> {
@@ -78,7 +89,7 @@ class Repository(application: Application) {
                 client = KineduAPI.kineduAPIService.getArticles(skillID,babyId)
             }
 
-    fun getArticleDetail(articleId: String) = networkCall<ArticleDetailReposResponse, ArticleDetailData> {
+    fun getArticleDetailFromApi(articleId: Int) = networkCall<ArticleDetailReposResponse, ArticleDetailData> {
         client = KineduAPI.kineduAPIService.getArticleDetail(articleId)
     }
 
@@ -113,6 +124,25 @@ class Repository(application: Application) {
                 }
                 Resource.ERROR -> {
                     Log.d("Repository", "--> Error loading articles!")
+                }
+            }
+        })
+    }
+
+    fun updateDbArticleDetail(articleId:Int,lifecycleOwner: LifecycleOwner): Unit {
+        getArticleDetailFromApi(articleId).observe(lifecycleOwner, Observer {
+            when(it.status){
+                Resource.LOADING -> {
+                    Log.d("Repository", "--> Loading article Detail to DB")
+                }
+                Resource.SUCCESS -> {
+                    Log.d("Repository", "--> Success! | loaded article Detail.")
+                    var newData:ArticleDetailData = ArticleDetailData(it.data!!.article,it.data!!.related_items,articleId)
+                    GlobalScope.launch {  articleDetailDao.insertArticleDetailData(newData!!) }
+
+                }
+                Resource.ERROR -> {
+                    Log.d("Repository", "--> Error loading article detail!")
                 }
             }
         })
@@ -165,7 +195,7 @@ object KineduAPI {
         fun getArticles(@Query("skill_id") skillId: String, @Query("baby_id") babyId: String): Deferred<Response<ArticleReposResponse>>
 
         @GET("articles/{article_id}")
-        fun getArticleDetail(@Path("article_id", encoded = false) articleId: String): Deferred<Response<ArticleDetailReposResponse>>
+        fun getArticleDetail(@Path("article_id", encoded = false) articleId: Int): Deferred<Response<ArticleDetailReposResponse>>
     }
 
 
