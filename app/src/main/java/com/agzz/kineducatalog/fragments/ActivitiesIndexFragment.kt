@@ -16,16 +16,22 @@ import com.agzz.kineducatalog.adapters.ActivitiesAdapter
 import com.agzz.kineducatalog.R
 import com.agzz.kineducatalog.viewmodels.ActivityViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.agzz.kineducatalog.network.Resource
+import com.agzz.kineducatalog.entities.Activity
+import com.agzz.kineducatalog.viewmodels.FilterValueViewModel
+
 import com.bumptech.glide.Glide
 
 
 class ActivitiesIndexFragment : Fragment(){
 
     private lateinit var activitiesViewModel: ActivityViewModel
+    private lateinit var ageFilterViewModel: FilterValueViewModel
     private lateinit var activitiesRecyclerView : RecyclerView
     private lateinit var activitiesAdapter : ActivitiesAdapter
     private lateinit var progressBar : ProgressBar
+    private var filteredActivityList:List<Activity>? = null
+    private var originalActivityList:List<Activity>? = null
+
 
     companion object {
         fun newInstance(): ActivitiesIndexFragment {
@@ -44,16 +50,36 @@ class ActivitiesIndexFragment : Fragment(){
         activitiesAdapter = ActivitiesAdapter(Glide.with(this))
         activitiesRecyclerView.adapter = activitiesAdapter
         activitiesViewModel.activitiesLiveData.observe(viewLifecycleOwner, Observer {
-                    activitiesAdapter.setData(it.activities)
+                    originalActivityList = it.activities
+                    filteredActivityList = originalActivityList
+                    activitiesAdapter.setData(originalActivityList!!)
                     progressBar.visibility = View.GONE
 
         })
         activitiesViewModel.fetchActivities("5","2064732",viewLifecycleOwner)
         val decoration = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         activitiesRecyclerView.addItemDecoration(decoration)
-        return rootView
 
+        ageFilterViewModel = ViewModelProviders.of(activity!!).get(FilterValueViewModel::class.java)
+        ageFilterViewModel.selectedAge.observe(viewLifecycleOwner, Observer {
+            Log.d("ActivitiesFragment: ", it.toString())
+            filterActivities(it)
+        })
+
+
+
+        return rootView
     }
 
-
+    fun filterActivities(selectedAge:Int){
+        if (selectedAge!= 0) {
+            filteredActivityList = originalActivityList!!.filter { it.age == selectedAge }
+            activitiesAdapter.setData(filteredActivityList!!)
+        }
+        else{
+            if (originalActivityList!=null){
+                activitiesAdapter.setData(originalActivityList!!)
+            }
+        }
+    }
 }

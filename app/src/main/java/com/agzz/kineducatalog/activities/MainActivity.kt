@@ -12,8 +12,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.agzz.kineducatalog.adapters.CatalogPagerAdapter
+import com.agzz.kineducatalog.viewmodels.FilterValueViewModel
 import com.google.android.material.tabs.TabLayout
 
 
@@ -52,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var filterViewModel: FilterValueViewModel = ViewModelProviders.of(this).get(FilterValueViewModel::class.java)
         val navView = findViewById<BottomNavigationView>(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         navView.selectedItemId = R.id.navigation_catalog
@@ -72,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         // Set an on item selected listener for spinner object
         filterSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent:AdapterView<*>, view: View, position: Int, id: Long){
-                Log.d("Filter: ", ageOptions[position])
+                filterViewModel.selectedAge.value = position
             }
 
             override fun onNothingSelected(parent: AdapterView<*>){
@@ -84,5 +88,7 @@ class MainActivity : AppCompatActivity() {
         viewpagerCatalog.adapter = fragmentAdapter
         tabLayout.setupWithViewPager(viewpagerCatalog)
     }
+
+
 
 }
